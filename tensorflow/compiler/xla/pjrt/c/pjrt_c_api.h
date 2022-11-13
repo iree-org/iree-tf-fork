@@ -29,6 +29,10 @@ limitations under the License.
 extern "C" {
 #endif
 
+// ---------------------------------- Forward Declarations ---------------------
+
+struct PJRT_Api;
+
 // ---------------------------------- Errors -----------------------------------
 
 // PJRT C API methods generally return a PJRT_Error*, which is nullptr if there
@@ -195,9 +199,10 @@ typedef struct {
   size_t struct_size;
   void* priv;
   PJRT_Client* client;  // out
+  struct PJRT_Api* api;
 } PJRT_Client_Create_Args;
 const size_t PJRT_Client_Create_Args_STRUCT_SIZE =
-    PJRT_STRUCT_SIZE(PJRT_Client_Create_Args, client);
+    PJRT_STRUCT_SIZE(PJRT_Client_Create_Args, api);
 
 // Creates and initializes a new PJRT_Client and returns in `client`.
 typedef PJRT_Error* PJRT_Client_Create(PJRT_Client_Create_Args* args);
@@ -939,7 +944,7 @@ typedef PJRT_Error* PJRT_Buffer_UnsafePointer(
 #define _PJRT_API_STRUCT_FIELD(fn_type) fn_type* fn_type
 
 // Please modify PJRT_Api_STRUCT_SIZE if the last field of PJRT_Api is changed.
-typedef struct {
+struct PJRT_Api {
   size_t struct_size;
   void* priv;
 
@@ -994,8 +999,8 @@ typedef struct {
   _PJRT_API_STRUCT_FIELD(PJRT_Buffer_IsOnCpu);
   _PJRT_API_STRUCT_FIELD(PJRT_Buffer_ReadyEvent);
   _PJRT_API_STRUCT_FIELD(PJRT_Buffer_UnsafePointer);
-} PJRT_Api;
-
+};
+typedef struct PJRT_Api PJRT_Api;
 const size_t PJRT_Api_STRUCT_SIZE =
     PJRT_STRUCT_SIZE(PJRT_Api, PJRT_Buffer_UnsafePointer);
 

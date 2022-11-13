@@ -1094,6 +1094,7 @@ StatusOr<std::unique_ptr<PjRtClient>> GetCApiClient() {
   PJRT_Client_Create_Args init_args;
   init_args.struct_size = PJRT_Client_Create_Args_STRUCT_SIZE;
   init_args.priv = nullptr;
+  init_args.api = c_api;
   RETURN_STATUS_IF_ERROR(c_api->PJRT_Client_Create(&init_args), c_api);
   PJRT_Client* c_client = init_args.client;
 
