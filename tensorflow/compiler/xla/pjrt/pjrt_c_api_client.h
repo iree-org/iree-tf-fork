@@ -517,6 +517,10 @@ class PjRtCApiExecutable : public PjRtLoadedExecutable {
 
 StatusOr<std::unique_ptr<PjRtClient>> GetCApiClient();
 
+// Loads a PJRT plugin from a separately compiled plugin shared library.
+StatusOr<std::unique_ptr<PjRtClient>> LoadPjrtDynamicPlugin(
+    const std::string& plugin_path, std::vector<std::string>& config_vars);
+
 }  // namespace xla
 
 #endif  // TENSORFLOW_COMPILER_XLA_PJRT_PJRT_C_API_CLIENT_H_

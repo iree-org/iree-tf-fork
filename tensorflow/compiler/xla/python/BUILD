@@ -886,6 +886,7 @@ pybind_extension(
         "//tensorflow/compiler/xla/pjrt:mlir_to_hlo",
         "//tensorflow/compiler/xla/pjrt:cpu_device",
         "//tensorflow/compiler/xla/pjrt:interpreter_device",
+        "//tensorflow/compiler/xla/pjrt:pjrt_c_api_client",
         "//tensorflow/compiler/xla/pjrt:pjrt_client",
         "//tensorflow/compiler/xla/pjrt:pjrt_compiler",
         "//tensorflow/compiler/xla/pjrt:tfrt_cpu_pjrt_client",
@@ -907,7 +908,6 @@ pybind_extension(
         "//conditions:default": [],
     }) + select({
         ":tpu_enabled": [
-            "//tensorflow/compiler/xla/pjrt:pjrt_c_api_client",
             "//tensorflow/compiler/xla/pjrt:tpu_client",
         ],
         "//conditions:default": [],

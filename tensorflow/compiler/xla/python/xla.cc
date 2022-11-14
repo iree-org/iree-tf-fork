@@ -44,9 +44,9 @@ limitations under the License.
 #ifdef XLA_PYTHON_ENABLE_PLUGIN_DEVICE
 #include "tensorflow/compiler/xla/pjrt/pjrt_plugin_device_client.h"
 #endif  // XLA_PYTHON_ENABLE_PLUGIN_DEVICE
+#include "tensorflow/compiler/xla/pjrt/pjrt_c_api_client.h"
 #include "tensorflow/compiler/xla/pjrt/tfrt_cpu_pjrt_client.h"
 #ifdef XLA_PYTHON_ENABLE_TPU
-#include "tensorflow/compiler/xla/pjrt/pjrt_c_api_client.h"
 #include "tensorflow/compiler/xla/pjrt/tpu_client.h"
 #endif  // XLA_PYTHON_ENABLE_TPU
 #include "tensorflow/compiler/xla/python/custom_call_sharding.h"
@@ -380,6 +380,15 @@ PYBIND11_MODULE(xla_extension, m) {
           return std::make_shared<PyClient>(std::move(client));
         });
 #endif  // XLA_PYTHON_ENABLE_PLUGIN_DEVICE
+
+  m.def("load_pjrt_dynamic_plugin",
+        [](std::string plugin_path, std::vector<std::string> config_vars)
+            -> StatusOr<std::shared_ptr<PyClient>> {
+          py::gil_scoped_release gil_release;
+          TF_ASSIGN_OR_RETURN(std::unique_ptr<PjRtClient> c_api_client,
+                              LoadPjrtDynamicPlugin(plugin_path, config_vars));
+          return std::make_shared<PyClient>(std::move(c_api_client));
+        });
 
   TF_CHECK_OK(PyBuffer::RegisterTypes(m));
   TF_CHECK_OK(PyArray::RegisterTypes(m));

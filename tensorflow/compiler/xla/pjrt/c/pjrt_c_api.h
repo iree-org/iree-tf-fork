@@ -199,7 +199,7 @@ typedef struct {
   size_t struct_size;
   void* priv;
   PJRT_Client* client;  // out
-  struct PJRT_Api* api;
+  const struct PJRT_Api* api;
 } PJRT_Client_Create_Args;
 const size_t PJRT_Client_Create_Args_STRUCT_SIZE =
     PJRT_STRUCT_SIZE(PJRT_Client_Create_Args, api);

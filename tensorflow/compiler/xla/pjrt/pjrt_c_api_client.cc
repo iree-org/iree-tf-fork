@@ -1102,4 +1102,10 @@ StatusOr<std::unique_ptr<PjRtClient>> GetCApiClient() {
       std::make_unique<PjRtCApiClient>(c_api, c_client));
 }
 
+StatusOr<std::unique_ptr<PjRtClient>> LoadPjrtDynamicPlugin(
+    const std::string& plugin_path, std::vector<std::string>& config_vars) {
+  // TODO
+  return InternalError("Plugin not yet implemented");
+}
+
 }  // namespace xla
